@@ -14,7 +14,7 @@ export function justifyController(req: Request, res: Response) {
   const canUse = incrementUsage(token, words);
   if (!canUse) {
     return res.status(402).json({
-      error: "Payment Required: daily word limit exceeded (80,000 words/day)",
+      error: "Paiement requis : limite quotidienne de mots dépassée (80 000 mots/jour)",
     });
   }
 
