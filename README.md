@@ -206,7 +206,7 @@ Copy code
 import requests
 
 # 1. Obtenir un token
-r = requests.post('http://localhost:3000/api/token', json={'email': 'user@example.com'})
+r = requests.post('http://localhost:3000/api/token', json={'email': 'dimitri.tictactrip@example.com'})
 token = r.json()['token']
 
 # 2. Justifier du texte
