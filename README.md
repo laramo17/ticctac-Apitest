@@ -1,237 +1,101 @@
-# 📖 TicTacTrip - Justify API Documentation
+# 🧾 API Justify Text – Node.js & TypeScript
 
-Bienvenue sur la documentation de **TicTacTrip Justify API**, une API REST en **Node.js / TypeScript** qui justifie un texte à une largeur fixe de **80 caractères par ligne**.
+## 🎯 Objectif
 
-> 🟢 Dans le cadre de ce projet technique, **j’ai déployé cette API sur un lien public Replit** afin de la rendre accessible en ligne, conformément aux consignes du test.
+Implémenter et déployer une **API REST** qui justifie un texte passé en paramètre.
+
+Le but est de produire un texte où chaque ligne contient **exactement 80 caractères**, en ajoutant des espaces supplémentaires entre les mots si nécessaire (comme dans les traitements de texte).
 
 ---
 
-## 🚀 Démarrage Rapide
+## 🛠️ Stack technique
 
-### 🔧 Installation
+- **Node.js**
+- **TypeScript**
+- **Express.js**
+- **Middleware personnalisé**
+- **Routes séparées**
+- **Déploiement sur Replit (gratuit et sans carte bancaire)**
 
-```bash
-git clone https://github.com/laramo17/ticctac-Apitest.git
-cd ticctac-Apitest
+---
+
+## ⚙️ Installation et exécution locale
+
+1️⃣ **Installer les dépendances**
+
 npm install
+2️⃣ Compiler le code TypeScript
+
+bash
+Copy code
 npx tsc
+3️⃣ Lancer le serveur
+
+bash
+Copy code
 node dist/index.js
-Le serveur démarre sur :
+Le serveur démarre ensuite sur :
 👉 http://localhost:3000
 
-💡 Utilisation Simple
-1️⃣ Obtenir un token
-bash
-Copy code
-curl -X POST http://localhost:3000/api/token \
-  -H "Content-Type: application/json" \
-  -d '{"email":"test@example.com"}'
-Réponse :
-
-json
-Copy code
-{"token": "abc123xyz"}
-2️⃣ Justifier du texte
-bash
-Copy code
-curl -X POST http://localhost:3000/api/justify \
-  -H "Authorization: Bearer VOTRE_TOKEN" \
-  -H "Content-Type: text/plain" \
-  -d "Votre texte à justifier ici"
-Réponse :
-Texte justifié (chaque ligne fait exactement 80 caractères).
-
-📡 Endpoints
-POST /api/token
-Génère un token d’authentification unique à partir d’un email.
-
-Body :
-
-json
-Copy code
-{"email": "user@example.com"}
-Réponse :
-
-json
-Copy code
-{"token": "abc123xyz"}
+🧩 Endpoint principal
 POST /api/justify
-Justifie un texte selon une largeur de 80 caractères.
-
-Headers :
-
-pgsql
+📥 Corps de la requête :
+json
 Copy code
-Authorization: Bearer <token>
-Content-Type: text/plain
-Body :
+{
+  "text": "Le texte à jusifier"
+}
+📤 Réponse :
+Texte justifié avec des lignes de 80 caractères chacune.
 
-nginx
-Copy code
-Ceci est un texte à justifier.
-Réponse :
-Texte justifié.
+🔒 Middleware
+L’API utilise un **middleware d’authentification** pour sécuriser l’accès à l’endpoint `/api/justify`
 
-Limite : 80 000 mots / jour / token
-Si dépassé : 402 Payment Required
-
-🔀 Routes
-Les routes principales exposées par l'API :
-
-POST /api/token → token.route.ts → token.controller.ts
-
-POST /api/justify → justify.route.ts → justify.controller.ts
-
-Chaque route utilise le contrôleur correspondant et, pour /api/justify, le middleware d’authentification est appliqué (vérifie la présence et validité du token).
-
-🛡 Middleware
-Middleware inclus dans le projet :
-
-auth.middleware.ts
-
-Vérifie l’en-tête Authorization: Bearer <token>.
-
-Cherche le token via getToken() dans Limiter.ts.
-
-Si le token est valide : attache (req as any).token = <token> et appelle next().
-
-Sinon : renvoie 401 Unauthorized.
-
-body parsers (configurés dans index.ts)
-
-express.json() → pour parser le body JSON (/api/token)
-
-express.text() → pour parser le body texte brut (/api/justify)
-
-🏗️ Structure du Projet
+📁 Structure du projet
 bash
 Copy code
-src/
-├── index.ts                     # Point d'entrée du serveur
-├── routes/
-│   ├── token.route.ts           # Monte POST /api/token
-│   └── justify.route.ts         # Monte POST /api/justify
-├── controllers/
-│   ├── token.controller.ts      # Logique pour /api/token
-│   └── justify.controller.ts    # Logique pour /api/justify
-├── services/
-│   └── justify.service.ts       # Algorithme de justification
-├── utils/
-│   └── Limiter.ts               # Gestion des tokens & limites journalières
-├── middlewares/
-│   └── auth.middleware.ts       # Vérification token
-tokens.json                       # Stockage local des tokens (généré au runtime)
-tsconfig.json                     # Configuration TypeScript
-package.json                      # Dépendances et scripts
-README.md                         # Documentation
-🔐 Sécurité & Limites
-Rate Limiting
-Limite : 80 000 mots / jour / token
+project/
+│
+├── src/
+│   ├── index.ts          # Point d’entrée principal
+│   ├── routes/
+│   │   └── justifyRoute.ts   # Définit la route /api/justify
+│   ├── controllers/
+|   │   ├── token.controller.ts      # Logique pour /api/token
+|   │   └── justify.controller.ts    # Logique pour /api/justify
+│   ├── middleware/
+│   │   └── justifyMiddleware.ts  # Gère la logique de justification
+│   └── utils/
+│       └── justifyText.ts   # Fonction principale pour formater le texte
+│
+├── package.json
+├── tsconfig.json
+└── README.md
+🧪 Bonus et qualité
+Ils sont presque obligatoires pour te démarquer :
 
-Reset : tous les jours à 00:00 UTC
+✅ Tests unitaires (si ajoutés ultérieurement)
+✅ Code clair et bien commenté
+✅ Commits propres et explicites
+✅ Documentation lisible et structurée
 
-Calcul : nombre de mots envoyés dans /api/justify
+🌐 Déploiement en ligne
+Dans le cadre de ce projet, j’ai déployé l’API sur une URL publique afin qu’elle soit accessible et testable en ligne sans installation locale.
 
-Authentification
-Token unique généré par /api/token (par email)
+🔗 Lien public du déploiement :
+👉 https://e883dd57-847c-4399-82df-c2cbbe92958e-00-ny7t2kw0o2g1.picard.replit.dev
 
-Format : Authorization: Bearer <token>
+Cette URL pointe vers le serveur Node.js hébergeant l’API REST de justification de texte.
 
-🧮 Fonctionnement de la Justification
-Découpage du texte en mots.
+⚙️ Stack technique utilisée :
+TypeScript
 
-Construction de lignes jusqu’à 80 caractères.
+Node.js
 
-Répartition équitable des espaces entre les mots (sauf la dernière ligne).
+Express.js
 
-La dernière ligne est alignée à gauche.
+Middleware personnalisé (validation de token, formatage du texte)
 
-Exemple :
-Entrée : "Hello world this is a test"
-Sortie :
+Routes bien structurées (/api/justify)
 
-kotlin
-Copy code
-Hello          world          this          is          a          test
-🧪 Tests
-bash
-Copy code
-# Lancer les tests
-npm test
-
-# Avec couverture
-npm run test:coverage
-Objectif recommandé : 80 % de couverture.
-
-🧾 Codes d’Erreur
-Code	Signification	Cause
-200	OK	Succès
-400	Bad Request	Email ou texte invalide
-401	Unauthorized	Token manquant ou invalide
-402	Payment Required	Limite de 80 000 mots atteinte
-404	Not Found	Mauvais endpoint
-
-💡 Exemples de Code
-JavaScript
-js
-Copy code
-// 1. Obtenir un token
-const res = await fetch('http://localhost:3000/api/token', {
-  method: 'POST',
-  headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify({email: 'user@example.com'})
-});
-const { token } = await res.json();
-
-// 2. Justifier le texte
-const justifyRes = await fetch('http://localhost:3000/api/justify', {
-  method: 'POST',
-  headers: {
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'text/plain'
-  },
-  body: 'Mon texte à justifier'
-});
-console.log(await justifyRes.text());
-Python
-python
-Copy code
-import requests
-
-# 1. Obtenir un token
-r = requests.post('http://localhost:3000/api/token', json={'email': 'user@example.com'})
-token = r.json()['token']
-
-# 2. Justifier du texte
-r = requests.post('http://localhost:3000/api/justify',
-                  headers={'Authorization': f'Bearer {token}', 'Content-Type': 'text/plain'},
-                  data='Mon texte à justifier')
-print(r.text)
-🚢 Déploiement
-🌍 Déploiement Public (Replit)
-Ce projet a été déployé sur Replit, plateforme gratuite ne nécessitant pas de carte bancaire.
-👉 Lien public : https://e883dd57-847c-4399-82df-c2cbbe92958e-00-ny7t2kw0o2g1.picard.replit.dev
-
-Cela permet de tester directement l’API en ligne (ex. via Postman ou curl).
-
-❓ FAQ
-Q : Puis-je générer plusieurs tokens par email ?
-R : Non, chaque appel à /api/token crée un token unique par adresse mail.
-
-Q : Que se passe-t-il après 80 000 mots ?
-R : L’API renvoie 402 Payment Required. Le compteur se réinitialise chaque jour à minuit.
-
-Q : Pourquoi tokens.json ?
-R : C’est un moyen simple de persister les tokens localement.
-En production, on utiliserait une base de données (PostgreSQL, Redis, etc.).
-
-🧾 Informations du Projet
-Langage : Node.js → TypeScript
-
-Justification : implémentée sans bibliothèque externe
-
-Stockage local : tokens.json
-
-Déploiement : Replit (lien public)
-
-Repo GitHub : https://github.com/laramo17/ticctac-Apitest
+Déploiement via Replit
