@@ -51,26 +51,27 @@ Texte justifié avec des lignes de 80 caractères chacune.
 🔒 Middleware
 L’API utilise un **middleware d’authentification** pour sécuriser l’accès à l’endpoint `/api/justify`
 
-📁 Structure du projet
-bash
-Copy code
+## 🏗️ Structure du Projet
+
+```bash
 project/
 │
 ├── src/
-│   ├── index.ts          # Point d’entrée principal
+│   ├── index.ts                # Point d’entrée principal
 │   ├── routes/
-│   │   └── justifyRoute.ts   # Définit la route /api/justify
+│   │   └── justifyRoute.ts     # Définit la route /api/justify
 │   ├── controllers/
-|   │   ├── token.controller.ts      # Logique pour /api/token
-|   │   └── justify.controller.ts    # Logique pour /api/justify
+│   │   ├── token.controller.ts      # Logique pour /api/token
+│   │   └── justify.controller.ts    # Logique pour /api/justify
 │   ├── middleware/
-│   │   └── justifyMiddleware.ts  # Gère la logique de justification
+│   │   └── justifyMiddleware.ts     # Gère la logique d’authentification
 │   └── utils/
-│       └── justifyText.ts   # Fonction principale pour formater le texte
+│       └── justifyText.ts           # Fonction principale pour formater le texte
 │
 ├── package.json
 ├── tsconfig.json
 └── README.md
+
 🧪 Bonus et qualité
 Ils sont presque obligatoires pour te démarquer :
 
