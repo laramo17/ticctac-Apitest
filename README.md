@@ -71,7 +71,7 @@ project/
 ├── package.json
 ├── tsconfig.json
 └── README.md
-
+```
 🧪 Bonus et qualité
 Ils sont presque obligatoires pour te démarquer :
 
