@@ -111,6 +111,7 @@ express.text() → pour parser le body texte brut (/api/justify)
 🏗️ Structure du Projet
 bash
 Copy code
+```
 src/
 ├── index.ts                     # Point d'entrée du serveur
 ├── routes/
@@ -129,6 +130,7 @@ tokens.json                       # Stockage local des tokens (généré au runt
 tsconfig.json                     # Configuration TypeScript
 package.json                      # Dépendances et scripts
 README.md                         # Documentation
+```
 🔐 Sécurité & Limites
 Rate Limiting
 Limite : 80 000 mots / jour / token
